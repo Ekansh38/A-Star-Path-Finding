@@ -6,25 +6,29 @@ class Cell:
     def __init__(self, pos):
         self.pos = pos
         self.color = "white"
-        self.wall = False
-        self.start_cell = False
-        self.end_cell = False
-        self.open_set = False
-        self.closed_set = False
-        self.path = False
+
         self.f_cost = 10000
         self.parent = None
         self.neighbors = []
 
+        self.wall = False
+        self.path = False
+
+        self.start_cell = False
+        self.end_cell = False
+
+        self.open_set = False
+        self.closed_set = False
+
     def set_color(self):
         if self.wall:
             self.color = "black"
-        elif self.start_cell:
-            self.color = (0, 140, 168)
-        elif self.end_cell:
-            self.color = (0, 140, 168)
         elif self.path:
-            self.color = (0, 140, 168)
+            self.color = (0, 0, 255)
+        elif self.start_cell:
+            self.color = (255, 165, 0)
+        elif self.end_cell:
+            self.color = (255, 0, 255)
         elif self.closed_set:
             self.color = "green"
         elif self.open_set:

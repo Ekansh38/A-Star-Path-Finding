@@ -5,7 +5,7 @@ from button import Button
 from grid import Grid
 
 # Constants
-grid = Grid(25, 40, 50)
+grid = Grid(25, 50, 50)
 MARGIN = 200
 SCREEN_SIZE = Vector2(grid.cols * grid.cell_size, grid.rows * grid.cell_size + MARGIN)
 FPS = 60
@@ -39,10 +39,9 @@ while running:
             running = False
 
     screen.fill("white")
+    button.draw(screen)
 
     grid.update(screen)
-
-    button.draw(screen)
 
     if button.check_click():
         grid.start_pathfinding()

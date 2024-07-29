@@ -9,7 +9,7 @@ class Button:
         self.size = size
         self.color = color
         self.outline_color = outline_color
-        self.margin = Vector2(80, 20)
+        self.text_offset = Vector2(80, 20)
 
     def draw(self, screen):
         pygame.draw.rect(
@@ -39,8 +39,8 @@ class Button:
         screen.blit(
             text,
             (
-                self.pos.x + (self.size.x // 2) - self.margin.x,
-                self.pos.y + (self.size.y // 2) - self.margin.y,
+                self.pos.x + (self.size.x // 2) - self.text_offset.x,
+                self.pos.y + (self.size.y // 2) - self.text_offset.y,
             ),
         )
 
