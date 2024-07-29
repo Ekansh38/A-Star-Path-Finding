@@ -24,11 +24,11 @@ class Cell:
         if self.wall:
             self.color = "black"
         elif self.path:
-            self.color = (0, 0, 255)
+            self.color = (0, 116, 189)
         elif self.start_cell:
             self.color = (255, 165, 0)
         elif self.end_cell:
-            self.color = (255, 0, 255)
+            self.color = (149, 0, 166)
         elif self.closed_set:
             self.color = "green"
         elif self.open_set:

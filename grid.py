@@ -9,14 +9,19 @@ class Grid:
         self.rows = rows
         self.cols = cols
         self.cell_size = cell_size
+
         self.line_thickness = 3
         self.line_color = "black"
-        self.start_cell = None
-        self.end_cell = None
+
         self.cells = []
         self.start = False
+
+        self.start_cell = None
+        self.end_cell = None
+
         self.open_set = []
         self.closed_set = []
+
         self.create_cells()
 
     def start_pathfinding(self):
@@ -36,6 +41,8 @@ class Grid:
         self.draw_cells(screen)
         self.draw_grid(screen)
         if self.start and self.start_cell is not None and self.end_cell is not None:
+
+            # Find cell in open_set with lowest f_cost and set it as current
             lowest_f_cost = 1000000
             current = self.open_set[0]
             for cell in self.open_set:
@@ -43,35 +50,43 @@ class Grid:
                     current = cell
                     lowest_f_cost = cell.f_cost
 
+            # Remove current from open_set and add it to closed_set
             self.open_set.remove(current)
             current.open_set = False
             self.closed_set.append(current)
             current.closed_set = True
 
+            # Check if current is the end cell and retrace the path to find the path if it is
             if current == self.end_cell:
                 self.retrace_path()
                 self.start = False
                 return
 
+            # Find neighbors of current
+
             current.find_neighbors(self.cells)
 
             for neighbor in current.neighbors:
+                # Skip if neighbor is a wall or in closed_set so it doesn't get checked again
                 if neighbor.wall or neighbor in self.closed_set:
                     continue
 
+                # Calculate g_cost, h_cost and f_cost
                 start_pos = self.start_cell.pos
-                g_cost = start_pos.distance_to(neighbor.pos) * 10
-                h_cost = neighbor.pos.distance_to(self.end_cell.pos) * 10
+                end_pos = self.end_cell.pos
+                neighbor_pos = neighbor.pos
+
+                g_cost = neighbor_pos.distance_to(start_pos) * 10
+                h_cost = neighbor_pos.distance_to(end_pos) * 10
                 f_cost = g_cost + h_cost
-                if neighbor not in self.open_set and neighbor.parent is None:
+
+                # If the neighbor has never been checked before or if we have found a better path to the neighbor
+                if neighbor not in self.open_set or f_cost < neighbor.f_cost:
+                    # Set the parent to know where the path came from. This is for the retrace_path function
                     neighbor.parent = current
+                    # Set the f_cost of the neighbor
                     neighbor.f_cost = f_cost
-                    if neighbor not in self.open_set:
-                        neighbor.open_set = True
-                        self.open_set.append(neighbor)
-                elif f_cost < neighbor.f_cost:
-                    neighbor.parent = current
-                    neighbor.f_cost = f_cost
+                    # Add the neighbor to the open_set if it's not already there
                     if neighbor not in self.open_set:
                         neighbor.open_set = True
                         self.open_set.append(neighbor)
