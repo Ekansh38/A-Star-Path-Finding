@@ -5,7 +5,7 @@ from button import Button
 from grid import Grid
 
 # Constants
-grid = Grid(20, 35, 50)
+grid = Grid(25, 40, 50)
 MARGIN = 200
 SCREEN_SIZE = Vector2(grid.cols * grid.cell_size, grid.rows * grid.cell_size + MARGIN)
 FPS = 60

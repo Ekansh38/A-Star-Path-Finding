@@ -33,7 +33,6 @@ class Grid:
             cell.path = True
 
     def update(self, screen):
-        self.check_input()
         self.draw_cells(screen)
         self.draw_grid(screen)
         if self.start and self.start_cell is not None and self.end_cell is not None:
@@ -76,6 +75,8 @@ class Grid:
                     if neighbor not in self.open_set:
                         neighbor.open_set = True
                         self.open_set.append(neighbor)
+        else:
+            self.check_input()
 
     def create_cells(self):
         for x in range(0, self.cols):
