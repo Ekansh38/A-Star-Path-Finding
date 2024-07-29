@@ -22,17 +22,27 @@ class Grid:
         self.open_set = []
         self.closed_set = []
 
+        self.solved = False
+
         self.create_cells()
 
     def start_pathfinding(self):
-        self.start = True
+        if (
+            not self.solved
+            and self.start_cell is not None
+            and self.end_cell is not None
+        ):
+            self.start = True
 
     def retrace_path(self):
         path = []
         current = self.end_cell
         while current != self.start_cell:
             path.append(current)
-            current = current.parent
+            try:
+                current = current.parent
+            except AttributeError:
+                pass
         path.append(self.start_cell)
         for cell in path:
             cell.path = True
@@ -40,7 +50,12 @@ class Grid:
     def update(self, screen):
         self.draw_cells(screen)
         self.draw_grid(screen)
-        if self.start and self.start_cell is not None and self.end_cell is not None:
+        if (
+            self.start
+            and self.start_cell is not None
+            and self.end_cell is not None
+            and not self.solved
+        ):
 
             # Find cell in open_set with lowest f_cost and set it as current
             lowest_f_cost = 1000000
@@ -60,6 +75,7 @@ class Grid:
             if current == self.end_cell:
                 self.retrace_path()
                 self.start = False
+                self.solved = True
                 return
 
             # Find neighbors of current
