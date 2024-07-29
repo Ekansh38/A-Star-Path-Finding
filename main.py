@@ -1,11 +1,13 @@
 import pygame
 from pygame.math import Vector2
 
+from button import Button
 from grid import Grid
 
 # Constants
 grid = Grid(20, 35, 50)
-SCREEN_SIZE = Vector2(grid.cols * grid.cell_size, grid.rows * grid.cell_size)
+MARGIN = 200
+SCREEN_SIZE = Vector2(grid.cols * grid.cell_size, grid.rows * grid.cell_size + MARGIN)
 FPS = 60
 
 # Basic setup
@@ -13,6 +15,22 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 running = True
+
+# Button
+button_size = Vector2(200, 100)
+button_pos = Vector2(
+    ((grid.cols * grid.cell_size) // 2) - (button_size.x // 2),
+    (grid.rows * grid.cell_size) + (MARGIN // 2) - (button_size.y // 2),
+)
+
+button = Button(
+    button_pos,
+    "START",
+    button_size,
+    "darkgreen",
+    "black",
+)
+
 
 # Main loop
 while running:
@@ -22,7 +40,12 @@ while running:
 
     screen.fill("white")
 
-    grid.draw_grid(screen)
+    grid.update(screen)
+
+    button.draw(screen)
+
+    if button.check_click():
+        grid.start_pathfinding()
 
     pygame.display.update()
     clock.tick(FPS)
