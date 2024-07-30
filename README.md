@@ -65,3 +65,4 @@ Ekansh - [Twitter or X](https://x.com/mister_byte_) - [YouTube Channel](https://
 ## Acknowledgments
 
 - [Pygame Documentation](https://www.pygame.org/docs/)
+- [Wikipedia](https://en.wikipedia.org/wiki/A*_search_algorithm)
