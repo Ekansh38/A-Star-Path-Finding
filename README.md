@@ -43,7 +43,7 @@ You can draw walls and then see the algorithm find the shortest path from the st
 
 You can use it to visualize the A\* path finding algorithm. You can draw walls and then see the algorithm find the shortest path from the start to the end.
 
-[Screenshot of the project](./images/Screenshot.png)
+![Screenshot of the project](./images/Screenshot.png)
 
 ## Features
 
